@@ -3,6 +3,6 @@ execute "update proxy passing to use kapow mgt console port" do
 	command "sed -i 's/^\\(Proxy.*:\\)\\(8080\\)\\(\\/\\)$/\\150080\\3/g' /etc/httpd/conf/httpd.conf"
 end
 
-execute "run management console" do
-  command "#{node[:kapow][:cmd_mgtconsole]}"
+bash "run management console" do
+  code "#{node[:kapow][:cmd_mgtconsole]}"
 end
