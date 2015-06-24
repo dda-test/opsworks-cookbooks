@@ -3,7 +3,10 @@ execute "update proxy passing to use kapow mgt console port" do
 	command "sed -i 's/^\\(Proxy.*:\\)\\(8080\\)\\(\\/\\)$/\\150080\\3/g' /etc/httpd/conf/httpd.conf"
 end
 
-bash "run management console" do
-  code "#{node[:kapow][:cmd_mgtconsole]}"
+execute "run management console" do
+  user "root"
+  group "root"
+#  command "#{node[:kapow][:cmd_mgtconsole]}"
+  command "/mnt/ebs/kapow/KapowKatalyst_9.4.8_x64/bin/RoboServer -p 50000 & disown"
   not_if "pgrep -lf RoboServer"
 end

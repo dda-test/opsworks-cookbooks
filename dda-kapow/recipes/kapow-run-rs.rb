@@ -4,5 +4,7 @@ execute "update proxy passing to use kapow mgt console port" do
 end
 
 execute "run management console" do
+  user "root"
+  group "root"
   command "#{node[:kapow][:cmd_robotserver]}"
 end
