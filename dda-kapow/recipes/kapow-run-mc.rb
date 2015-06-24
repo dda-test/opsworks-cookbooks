@@ -5,4 +5,5 @@ end
 
 bash "run management console" do
   code "#{node[:kapow][:cmd_mgtconsole]}"
+  not_if "pgrep -lf RoboServer"
 end
