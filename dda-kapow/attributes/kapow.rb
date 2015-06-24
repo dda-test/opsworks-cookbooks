@@ -1,3 +1,4 @@
+default[:kapow] = {}
 default[:kapow][:install_dir] = '/mnt/ebs/kapow'
 default[:kapow][:download_dir] = '/mnt/ebs/kapow/download'
 default[:kapow][:base_name] = 'KapowKatalyst'
