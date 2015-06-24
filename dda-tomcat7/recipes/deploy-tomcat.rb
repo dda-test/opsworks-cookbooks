@@ -3,7 +3,7 @@ package 'install tomcat 7 package' do
   action :install
 end
 
-include_recipe 'tomcat-service'
-include_recipe 'configure-tomcat7'
+include_recipe 'dda-tomcat7::tomcat-service'
+include_recipe 'dda-tomcat7::configure-tomcat7'
 include_recipe 'apache2'
-include_recipe 'apache-tomcat-bind'
+include_recipe 'dda-tomcat7::apache-tomcat-bind'
