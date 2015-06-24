@@ -8,5 +8,5 @@ default[:kapow][:ext] = 'gz'
 default[:kapow][:archive_name] = "#{node[:kapow][:base_name]}_#{node[:kapow][:version]}_#{node[:kapow][:architecture]}.#{node[:kapow][:ext]}"
 default[:kapow][:s3_bucket] = 'dodge-dev-opsworks/software-deployments'
 default[:kapow][:server_port] = '50000'
-default[:kapow][:cmd_robotserver] = "#{[:kapow][:install_dir]}/#{node[:kapow][:base_name]}_#{node[:kapow][:version]}_#{node[:kapow][:architecture]}/bin/RoboServer -p #{node[:kapow][:server_port].to_s}"
-default[:kapow][:cmd_mgtconsole] = "#{[:kapow][:install_dir]}/#{node[:kapow][:base_name]}_#{node[:kapow][:version]}_#{node[:kapow][:architecture]}/bin/RoboServer -p #{node[:kapow][:server_port].to_s} -MC"
+default[:kapow][:cmd_robotserver] = "#{node[:kapow][:install_dir]}/#{node[:kapow][:base_name]}_#{node[:kapow][:version]}_#{node[:kapow][:architecture]}/bin/RoboServer -p #{node[:kapow][:server_port].to_s}"
+default[:kapow][:cmd_mgtconsole] = "#{node[:kapow][:install_dir]}/#{node[:kapow][:base_name]}_#{node[:kapow][:version]}_#{node[:kapow][:architecture]}/bin/RoboServer -p #{node[:kapow][:server_port].to_s} -MC"
