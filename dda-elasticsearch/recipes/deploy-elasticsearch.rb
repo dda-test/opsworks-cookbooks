@@ -16,5 +16,5 @@ execute "untar package" do
   environment "PATH" => "/bin:#{ENV["PATH"]}"
   cwd "#{node[:elasticsearch][:install_dir]}"
   command "tar -zxf #{node[:elasticsearch][:install_dir]}/#{node[:elasticsearch][:archive_name]}"
-  not_if { ::File.exist?("#{node[:elasticsearch][:install_dir]}/#{node[:elasticsearch][:base_name]}_#{node[:elasticsearch][:version]}_#{node[:elasticsearch][:architecture]}")}
+  not_if { ::File.exist?("#{node[:elasticsearch][:install_dir]}/#{node[:elasticsearch][:base_name]}-#{node[:elasticsearch][:version]}")}
 end

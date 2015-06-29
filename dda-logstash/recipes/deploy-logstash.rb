@@ -16,5 +16,5 @@ execute "untar package" do
   environment "PATH" => "/bin:#{ENV["PATH"]}"
   cwd "#{node[:logstash][:install_dir]}"
   command "tar -zxf #{node[:logstash][:install_dir]}/#{node[:logstash][:archive_name]}"
-  not_if { ::File.exist?("#{node[:logstash][:install_dir]}/#{node[:logstash][:base_name]}_#{node[:logstash][:version]}_#{node[:logstash][:architecture]}")}
+  not_if { ::File.exist?("#{node[:logstash][:install_dir]}/#{node[:logstash][:base_name]}-#{node[:logstash][:version]}")}
 end
