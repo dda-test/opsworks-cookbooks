@@ -3,6 +3,7 @@ template "#{node['dda-elasticsearch']['install_dir']}/#{node[:elasticsearch][:ba
 	owner 'root'
 	group 'root'
 	mode '0644'
+	notifies :reload, 'service[elasticsearch]', :delayed
 end
 
 template "/etc/init.d/elasticsearch" do
