@@ -142,11 +142,11 @@
 
 # Path to directory containing configuration (this file and logging.yml):
 #
-path.conf: <%= "#{node['dda-elasticsearch']['install_dir']}/#{node[:elasticsearch][:base_name]}-#{node[:elasticsearch][:version]}/config" %>
+path.conf: <%= "#{node[:elasticsearch][:install_dir]}/#{node[:elasticsearch][:base_name]}-#{node[:elasticsearch][:version]}/config" %>
 
 # Path to directory where to store index data allocated for this node.
 #
-path.data: <%= "#{node['dda-elasticsearch']['install_dir']}/data" %>
+path.data: <%= "#{node[:elasticsearch][:install_dir]}/data" %>
 #
 # Can optionally include more than one location, causing data to be striped across
 # the locations (a la RAID 0) on a file level, favouring locations with most free
@@ -156,15 +156,15 @@ path.data: <%= "#{node['dda-elasticsearch']['install_dir']}/data" %>
 
 # Path to temporary files:
 #
-path.work: <%= "#{node['dda-elasticsearch']['install_dir']}/work" %>
+path.work: <%= "#{node[:elasticsearch][:install_dir]}/work" %>
 
 # Path to log files:
 #
-path.logs: <%= "#{node['dda-elasticsearch']['install_dir']}/logs" %>
+path.logs: <%= "#{node[:elasticsearch][:install_dir]}/logs" %>
 
 # Path to where plugins are installed:
 #
-path.plugins: <%= "#{node['dda-elasticsearch']['install_dir']}/plugins" %>
+path.plugins: <%= "#{node[:elasticsearch][:install_dir]}/plugins" %>
 
 
 #################################### Plugin ###################################
