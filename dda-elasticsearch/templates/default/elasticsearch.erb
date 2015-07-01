@@ -33,7 +33,7 @@ fi
 
 # Sets the default values for elasticsearch variables used in this script
 ES_USER="<%= "#{node[:elasticsearch][:user]}" %>"
-ES_GROUP="<%= "#{node[:elasticsearch][:group}" %>"
+ES_GROUP="<%= "#{node[:elasticsearch][:group]}" %>"
 ES_HOME="<%= "#{node[:elasticsearch][:install_dir]}/#{node[:elasticsearch][:base_name]}-#{node[:elasticsearch][:version]}" %>"
 MAX_OPEN_FILES=65535
 MAX_MAP_COUNT=262144
