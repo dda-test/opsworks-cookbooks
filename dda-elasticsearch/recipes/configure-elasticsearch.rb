@@ -1,4 +1,7 @@
-template "#{node['dda-elasticsearch']['install_dir']}/#{node[:elasticsearch][:base_name]}-#{node[:elasticsearch][:version]}/config/elasticsearch.yml" do
+es_config = "#{node['dda-elasticsearch']['install_dir']}/#{node[:elasticsearch][:base_name]}-#{node[:elasticsearch][:version]}/config/elasticsearch.yml"
+
+template "elasticsearch config" do
+	path es_config
 	source 'elasticsearch.yml.erb'
 	owner 'root'
 	group 'root'
