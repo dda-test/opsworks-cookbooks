@@ -6,3 +6,5 @@ default[:elasticsearch][:ext] = 'tar.gz'
 default[:elasticsearch][:archive_name] = "#{node[:elasticsearch][:base_name]}-#{node[:elasticsearch][:version]}.#{node[:elasticsearch][:ext]}"
 default[:elasticsearch][:s3_bucket] = 'dodge-dev-opsworks/software-deployments'
 default[:elasticsearch][:heap_size] = '6G'
+default[:elasticsearch][:user] = 'elasticsearch'
+default[:elasticsearch][:group] = 'elasticsearch'

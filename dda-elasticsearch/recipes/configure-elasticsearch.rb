@@ -17,6 +17,16 @@ template "/etc/init.d/elasticsearch" do
 	notifies :reload, 'service[elasticsearch]', :delayed
 end
 
+user_home = '/#{node[:elasticsearch][:user]}'
+
+user node[:elasticsearch][:group] do
+  gid node[:elasticsearch][:group]
+  shell '/bin/bash'
+  home user_home
+  system true
+  action :create
+end
+
 include_recipe 'dda-elasticsearch::service'
 
 service 'elasticsearch' do
