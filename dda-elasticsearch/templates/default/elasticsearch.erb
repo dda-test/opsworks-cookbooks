@@ -54,7 +54,7 @@ exec="$ES_HOME/bin/elasticsearch"
 prog="elasticsearch"
 pidfile="$PID_DIR/${prog}.pid"
 
-ES_HEAP_SIZE="<%= "#{node[:elasticsearch][:heap_size]}" %>
+ES_HEAP_SIZE="<%= "#{node[:elasticsearch][:heap_size]}" %>"
 
 export ES_HEAP_SIZE
 export ES_HEAP_NEWSIZE
