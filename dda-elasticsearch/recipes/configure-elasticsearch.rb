@@ -22,7 +22,7 @@ group node[:elasticsearch][:group] do
   append true
 end
 
-user_home = '/#{node[:elasticsearch][:user]}'
+user_home = "/#{node[:elasticsearch][:user]}"
 
 user node[:elasticsearch][:user] do
   supports :manage_home => true
