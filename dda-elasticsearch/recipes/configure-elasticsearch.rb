@@ -25,6 +25,7 @@ end
 user_home = '/#{node[:elasticsearch][:user]}'
 
 user node[:elasticsearch][:user] do
+  supports :manage_home => true
   gid node[:elasticsearch][:group]
   shell '/bin/bash'
   home user_home
