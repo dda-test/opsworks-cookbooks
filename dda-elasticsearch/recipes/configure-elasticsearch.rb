@@ -17,9 +17,14 @@ template "/etc/init.d/elasticsearch" do
 	notifies :reload, 'service[elasticsearch]', :delayed
 end
 
+group node[:elasticsearch][:group] do
+  action :create
+  append true
+end
+
 user_home = '/#{node[:elasticsearch][:user]}'
 
-user node[:elasticsearch][:group] do
+user node[:elasticsearch][:user] do
   gid node[:elasticsearch][:group]
   shell '/bin/bash'
   home user_home
