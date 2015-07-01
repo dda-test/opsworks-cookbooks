@@ -34,14 +34,14 @@ fi
 # Sets the default values for elasticsearch variables used in this script
 ES_USER="elasticsearch"
 ES_GROUP="elasticsearch"
-ES_HOME="<%= "#{node['dda-elasticsearch']['install_dir']}/#{node[:elasticsearch][:base_name]}-#{node[:elasticsearch][:version]}" %>"
+ES_HOME="<%= "#{node[:elasticsearch][:install_dir]}/#{node[:elasticsearch][:base_name]}-#{node[:elasticsearch][:version]}" %>"
 MAX_OPEN_FILES=65535
 MAX_MAP_COUNT=262144
-LOG_DIR="<%= "#{node['dda-elasticsearch']['install_dir']}/logs" %>"
-DATA_DIR="<%= "#{node['dda-elasticsearch']['install_dir']}/data" %>"
-WORK_DIR="<%= "#{node['dda-elasticsearch']['install_dir']}/work" %>"
-CONF_DIR="<%= "#{node['dda-elasticsearch']['install_dir']}/#{node[:elasticsearch][:base_name]}-#{node[:elasticsearch][:version]}/config" %>"
-CONF_FILE="<%= "#{node['dda-elasticsearch']['install_dir']}/#{node[:elasticsearch][:base_name]}-#{node[:elasticsearch][:version]}/config/elasticsearch.yml" %>"
+LOG_DIR="<%= "#{node[:elasticsearch][:install_dir]}/logs" %>"
+DATA_DIR="<%= "#{node[:elasticsearch][:install_dir]}/data" %>"
+WORK_DIR="<%= "#{node[:elasticsearch][:install_dir]}/work" %>"
+CONF_DIR="<%= "#{node[:elasticsearch][:install_dir]}/#{node[:elasticsearch][:base_name]}-#{node[:elasticsearch][:version]}/config" %>"
+CONF_FILE="<%= "#{node[:elasticsearch][:install_dir]}/#{node[:elasticsearch][:base_name]}-#{node[:elasticsearch][:version]}/config/elasticsearch.yml" %>"
 PID_DIR="/var/run/elasticsearch"
 
 # Source the default env file
@@ -54,7 +54,7 @@ exec="$ES_HOME/bin/elasticsearch"
 prog="elasticsearch"
 pidfile="$PID_DIR/${prog}.pid"
 
-ES_HEAP_SIZE="<%= "#{node['dda-elasticsearch']['heap_size']}" %>
+ES_HEAP_SIZE="<%= "#{node[:elasticsearch][:heap_size]}" %>
 
 export ES_HEAP_SIZE
 export ES_HEAP_NEWSIZE
