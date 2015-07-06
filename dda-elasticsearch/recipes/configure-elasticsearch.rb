@@ -61,8 +61,7 @@ directory "#{node[:elasticsearch][:install_dir]}/work" do
 	action :create
 end
 
-script "set memlock limits" do
-	interpreter bash
+bash "set memlock limits" do
 	cwd '/etc/security'
 	code <<-EOH
 	echo '*\t\thard\tmemlock\tunlimited' >> /etc/security/limits.conf
@@ -71,8 +70,7 @@ script "set memlock limits" do
 	not_if "grep '^\*.*memlock' /etc/security/limits.conf"
 end
 
-script "set nproc limits" do
-	interpreter bash
+bash "set nproc limits" do
 	cwd '/etc/security'
 	code <<-EOH
 	echo '*\t\thard\tnproc\tunlimited' >> /etc/security/limits.conf
