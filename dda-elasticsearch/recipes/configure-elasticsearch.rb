@@ -61,6 +61,26 @@ directory "#{node[:elasticsearch][:install_dir]}/work" do
 	action :create
 end
 
+script "set memlock limits" do
+	interpreter bash
+	cwd '/etc/security'
+	code <<-EOH
+	echo '*\t\thard\tmemlock\tunlimited' >> /etc/security/limits.conf
+	echo '*\t\tsoft\tmemlock\tunlimited' >> /etc/security/limits.conf
+	EOH
+	not_if "grep '^\*.*memlock' /etc/security/limits.conf"
+end
+
+script "set nproc limits" do
+	interpreter bash
+	cwd '/etc/security'
+	code <<-EOH
+	echo '*\t\thard\tnproc\tunlimited' >> /etc/security/limits.conf
+	echo '*\t\tsoft\tnproc\tunlimited' >> /etc/security/limits.conf
+	EOH
+	not_if "grep '^\*.*nproc' /etc/security/limits.conf"
+end
+
 include_recipe 'dda-elasticsearch::service'
 
 log "enabling elasticsearch service"
