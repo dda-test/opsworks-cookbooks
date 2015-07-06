@@ -63,6 +63,12 @@ end
 
 include_recipe 'dda-elasticsearch::service'
 
+log "enabling elasticsearch service"
+service 'elasticsearch' do
+	action :enable
+end
+
+log "starting elasticsearch service"
 service 'elasticsearch' do
 	action :start
 	not_if 'pgrep -lf elasticsearch'
