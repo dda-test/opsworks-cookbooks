@@ -40,6 +40,27 @@ directory node[:elasticsearch][:pid_dir] do
 	action :create
 end
 
+directory "#{node[:elasticsearch][:install_dir]}/logs" do
+	owner "#{node[:elasticsearch][:user]}"
+	group "#{node[:elasticsearch][:group]}"
+	mode 0755
+	action :create
+end
+
+directory "#{node[:elasticsearch][:install_dir]}/data" do
+	owner "#{node[:elasticsearch][:user]}"
+	group "#{node[:elasticsearch][:group]}"
+	mode 0755
+	action :create
+end
+
+directory "#{node[:elasticsearch][:install_dir]}/work" do
+	owner "#{node[:elasticsearch][:user]}"
+	group "#{node[:elasticsearch][:group]}"
+	mode 0755
+	action :create
+end
+
 include_recipe 'dda-elasticsearch::service'
 
 service 'elasticsearch' do
