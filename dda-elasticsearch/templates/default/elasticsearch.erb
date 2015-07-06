@@ -42,7 +42,7 @@ DATA_DIR="<%= "#{node[:elasticsearch][:install_dir]}/data" %>"
 WORK_DIR="<%= "#{node[:elasticsearch][:install_dir]}/work" %>"
 CONF_DIR="<%= "#{node[:elasticsearch][:install_dir]}/#{node[:elasticsearch][:base_name]}-#{node[:elasticsearch][:version]}/config" %>"
 CONF_FILE="<%= "#{node[:elasticsearch][:install_dir]}/#{node[:elasticsearch][:base_name]}-#{node[:elasticsearch][:version]}/config/elasticsearch.yml" %>"
-PID_DIR="/var/run/elasticsearch"
+PID_DIR="<%= "#{node[:elasticsearch][:pid_dir]}" %>"
 
 # Source the default env file
 ES_ENV_FILE="/etc/sysconfig/elasticsearch"
