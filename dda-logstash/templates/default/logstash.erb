@@ -24,20 +24,20 @@
 #JAVAMEM=2G
 export LS_HEAP_SIZE=6G
 # Location of logstash files
-LOCATION=<%= "#{node[:elasticsearch][:install_dir]}/#{node[:elasticsearch][:package_name]}" %>
+LOCATION=<%= "#{node[:logstash][:install_dir]}/#{node[:logstash][:package_name]}" %>
 
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 DESC="Logstash Daemon"
 NAME=java
 DAEMON=$(which java)
 LOGSTASH_SERVICE_NAME=logstash
-CONFIG_DIR=<%= "#{node[:elasticsearch][:install_dir]}/config" %>
-LOGFILE=<%= "#{node[:elasticsearch][:install_dir]}/logs/logstash.log" %>
+CONFIG_DIR=<%= "#{node[:logstash][:install_dir]}/config" %>
+LOGFILE=<%= "#{node[:logstash][:install_dir]}/logs/logstash.log" %>
 EXECNAME=${LOCATION}/bin/logstash 
 #ARGS="-Xmx$JAVAMEM -Xms$JAVAMEM -jar ${JARNAME} agent --config ${CONFIG_DIR} --log ${LOGFILE} --grok-patterns-path ${PATTERNSPATH}"
 ARGS="agent --config ${CONFIG_DIR} --log ${LOGFILE}"
 SCRIPTNAME=/etc/init.d/${LOGSTASH_SERVICE_NAME}
-PIDFILE=<%= "#{node[:elasticsearch][:pid_dir]}" %>/${LOGSTASH_SERVICE_NAME}.pid
+PIDFILE=<%= "#{node[:logstash][:pid_dir]}" %>/${LOGSTASH_SERVICE_NAME}.pid
 base=${LOGSTASH_SERVICE_NAME}
 
 # Exit if the package is not installed
