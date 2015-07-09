@@ -112,7 +112,7 @@ output {
   # send all events to elasticsearch #
   elasticsearch {
     protocol => "http"
-    host => "elasticsearch.ldrops.com:9200"
+    host => "<%= "#{node[:logstash][:es_node]}:#{node[:logstash][:es_port]}" %>"
     #port => "8300-8305"
     index => "logstash-%{+YYYY.MM.dd}"
   }
