@@ -1,4 +1,12 @@
-ls_config = "#{node[:logstash][:install_dir]}/#{node[:logstash][:base_name]}-#{node[:logstash][:version]}/config/logstash.conf"
+ls_config_dir = "#{node[:logstash][:install_dir]}/#{node[:logstash][:base_name]}-#{node[:logstash][:version]}/config"
+ls_config = "#{ls_config_dir}/logstash.conf"
+
+directory "#{ls_config_dir}" do
+	owner "#{node[:logstash][:user]}"
+	group "#{node[:logstash][:group]}"
+	mode 0755
+	action :create
+end
 
 template "logstash config" do
 	path ls_config
