@@ -1,0 +1,130 @@
+input {
+	# this is for remote log shipping
+	lumberjack {
+		port => 5555
+		type => notype
+		ssl_certificate => "/etc/pki/tls/certs/logstash.crt"
+		ssl_key => "/etc/pki/tls/private/logstash.key"
+	}
+
+  log4j {
+    mode => "server"
+    port => 9500
+    type => eslogs
+  }
+
+	# this is for the local syslog
+	file {
+		type => "syslog"
+
+		# Wildcards work, here :)
+		path => [ "/var/log/*.log", "/var/log/messages", "/var/log/syslog", "/var/log/zabbix/*.log" ]
+		sincedb_path => "/opt/logstash/sincedb-access"
+	}
+}
+filter {
+
+  grok { match => ["host", "%{GREEDYDATA:appType}-%{GREEDYDATA:serverType}-%{GREEDYDATA:environment}"] }
+
+  if [source] == "syslog" {
+
+    # dropping specific messages to just keep what we want to see
+    grok  { 
+            match => ["message", "(?m)%{GREEDYDATA} %{JAVACLASS} %{WORD}"]
+            add_tag => ["drop_me"]
+          }
+  }
+
+  if [type] == "apache" {
+    grok {  match => ["message", "%{COMBINEDAPACHELOG} %{QS:elsAuth} %{QS:ipString}( \*\*%{NUMBER:responseTimeSeconds:int}/%{NUMBER:responseTimeMicros:int}\*\*)?( %{NUMBER:dayOfWeek:int} %{NUMBER:hourOfDay:int})?"] }
+
+    date {
+      match => [ "timestamp" , "dd/MMM/yyyy:HH:mm:ss Z" ]
+      target => "@timestamp"
+      timezone => "UTC"
+    }
+
+    mutate {
+      gsub => ["elsAuth", "-", "NOAUTH"]
+    }
+
+    mutate {
+      convert => [ "bytes", "integer" ]
+    }
+
+    grok { match => ["request", "%{URIPATH:requestBase}(?:%{URIPARAM:requestParams})?"] }
+
+    if [responseTimeMicros] {
+      ruby {
+          code => "event['responseTimeMillis'] =  event['responseTimeMicros'] / 1000.0 rescue nil"
+       }
+    }
+
+    mutate {
+      gsub => ["ipString", " ", ""]
+      gsub => ["ipString", "\"", ""]
+      split => ["ipString",","]
+
+    }
+
+    if [ipString]  {
+      geoip {
+        source => "ipString"
+        target => "geoip"
+        add_field => [ "[geoip][coordinates]", "%{[geoip][longitude]}" ]
+        add_field => [ "[geoip][coordinates]", "%{[geoip][latitude]}"  ]
+      }
+      mutate {
+        convert => [ "[geoip][coordinates]", "float" ]
+      }
+    }
+
+   }
+  
+    if [type] == "grails" {
+
+    grok { match => ["message", "%{GREEDYDATA:timestamp} \[%{GREEDYDATA:threadname}\] %{LOGLEVEL:loglevel}\s*%{GREEDYDATA:class} - %{GREEDYDATA:logMessage}"]}
+	
+	date {
+      match => [ "timestamp" , "yyyy-MM-dd HH:mm:ss,SSS" ]
+      target => "@timestamp"
+      timezone => "UTC"
+    }
+    
+	grok {
+        match => ["logMessage", "%{GREEDYDATA}\s+Status = COMPLETED_WITH_ERRORS"]
+        add_tag => ["send_email_alert"]
+    }
+    
+    grok {
+        match => ["logMessage", "%{GREEDYDATA}\s+Status = FAILURE"]
+        add_tag => ["send_email_alert"]
+    }
+ 
+  }
+
+  if "drop_me" in [tags] {
+    drop {}
+  }
+}
+
+output {
+  # send all events to elasticsearch #
+  elasticsearch {
+    protocol => "http"
+    host => "elasticsearch.ldrops.com:9200"
+    #port => "8300-8305"
+    index => "logstash-%{+YYYY.MM.dd}"
+  }
+
+  if "send_email_alert" in [tags] {
+
+        email {
+          body => "ERROR IN LOGFILE: %{message}"
+          from => "logstash-prod.alert@nowhere.com"
+          subject => "LOGSTASH ALERT:  %{host} %{file}"
+          to => "chris.archambault@construction.com"
+        }
+
+  }
+}

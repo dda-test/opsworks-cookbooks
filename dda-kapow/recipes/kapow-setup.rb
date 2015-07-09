@@ -19,3 +19,12 @@ execute "untar package" do
   not_if { ::File.exist?("#{node[:kapow][:install_dir]}/#{node[:kapow][:base_name]}_#{node[:kapow][:version]}_#{node[:kapow][:architecture]}")}
 end
 
+# packages required to run the kapowbrowser process
+package ['libgdiplus'] do
+  action :install
+end
+
+#packages requires to run the DesignStudio (X11 and auth)
+package ['libXcursor-devel','libXext-devel','libXfixes','libXi-devel','libXrandr-devel','xorg-x11-xauth','xorg-x11-server-utils'] do
+  action :install
+end
