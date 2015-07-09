@@ -1,4 +1,4 @@
-aservice 'logstash' do
+service 'logstash' do
   service_name 'logstash'
   init_command "/etc/init.d/logstash"
 
